@@ -2,7 +2,7 @@
 
 import { useParams } from 'next/navigation'
 
-export default function Product() {
+export default function ProductPage() {
     const params = useParams<{ productId: string }>()
 
     return (
