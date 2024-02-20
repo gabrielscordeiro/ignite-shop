@@ -5,9 +5,6 @@ import { Roboto } from 'next/font/google'
 
 import { Header } from '@/app/components/header'
 
-
-
-
 const roboto = Roboto({
     subsets: ['latin'],
     weight: ['400', '700']
