@@ -1,4 +1,3 @@
-import { GetServerSideProps } from 'next'
 import Stripe from 'stripe'
 
 import Product from '@/app/components/product'
