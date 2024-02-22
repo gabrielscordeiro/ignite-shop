@@ -1,23 +1,26 @@
 import Image from 'next/image'
 
-import shirt1 from '@/assets/shirts/01.png'
+import { IProduct } from '@/app/page'
 
-export default function Product() {
+interface IProductProps {
+    product: IProduct
+}
+export default function Product({ product }: IProductProps) {
     return (
         <div className="group relative min-h-[500px] overflow-hidden bg-[linear-gradient(180deg,_#1ea483_0%,_#7465d4_100%)]">
             <a href="#">
 
                 <Image
-                    src={shirt1}
+                    src={product.imageUrl}
                     width={520}
                     height={480}
-                    alt="Shirt 01"
+                    alt={product.name}
                     className="object-cover"
                 />
 
                 <footer className="absolute inset-x-1 bottom-1 flex translate-y-[110%] items-center justify-between rounded-md bg-[#00000099] p-4 opacity-0 transition delay-75 ease-in-out group-hover:translate-y-0 group-hover:opacity-100">
-                    <span className="text-lg">Shirt X</span>
-                    <strong className="text-xl font-bold text-green300">US$ 79,90</strong>
+                    <span className="text-lg">{product.name}</span>
+                    <strong className="text-xl font-bold text-green300">US$ {(product.price / 100).toFixed(2)}</strong>
                 </footer>
             </a>
         </div>
