@@ -14,11 +14,11 @@ export interface IProduct {
     id: string
     name: string
     imageUrl: string
-    price: number
+    price: string
 }
 
 export default async function Home() {
-    const products: IProduct[] = await getProducts()
+    const products: IProduct[] = await getStaticProps()
 
     return (
         <main className="container mt-10 w-full">
@@ -43,7 +43,7 @@ export default async function Home() {
     )
 }
 
-async function getProducts() {
+async function getStaticProps() {
 
     const response = await stripe.products.list({
         expand: ['data.default_price']
@@ -57,7 +57,10 @@ async function getProducts() {
             id: product.id,
             name: product.name,
             imageUrl: product.images[0],
-            price: price.unit_amount,
+            price: new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+            }).format(price.unit_amount / 100)
         }
     })
 

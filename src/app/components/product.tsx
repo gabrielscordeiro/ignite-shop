@@ -20,7 +20,7 @@ export default function Product({ product }: IProductProps) {
 
                 <footer className="absolute inset-x-1 bottom-1 flex translate-y-[110%] items-center justify-between rounded-md bg-[#00000099] p-4 opacity-0 transition delay-75 ease-in-out group-hover:translate-y-0 group-hover:opacity-100">
                     <span className="text-lg">{product.name}</span>
-                    <strong className="text-xl font-bold text-green300">US$ {(product.price / 100).toFixed(2)}</strong>
+                    <strong className="text-xl font-bold text-green300">{product.price}</strong>
                 </footer>
             </a>
         </div>
