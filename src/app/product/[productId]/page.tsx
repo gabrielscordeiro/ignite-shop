@@ -1,22 +1,23 @@
 'use client'
 
-import { GetStaticProps } from 'next'
 import Image from 'next/image'
+import { useParams } from 'next/navigation'
 import Stripe from 'stripe'
 
 import { stripe } from '@/lib/stripe'
 
-interface ProductProps {
-    product: {
-        id: string
-        name: string
-        imageUrl: string
-        price: string
-        description: string
-    }
+interface IProduct {
+    id: string
+    name: string
+    imageUrl: string
+    price: string
+    description: string
 }
 
-export default function ProductPage({ product }: ProductProps) {
+export default async function ProductPage() {
+    const params = useParams<{ productId: string }>()
+
+    const product: IProduct = await getProduct(params.productId)
 
     return (
         <main className="product-container mx-auto grid max-w-6xl grid-cols-2 items-stretch gap-16">
@@ -42,8 +43,7 @@ export default function ProductPage({ product }: ProductProps) {
     )
 }
 
-export const getStaticProps: GetStaticProps<any, { id: string }> = async ({ params }) => {
-    const productId = params.id
+export async function getProduct(productId: string) {
 
     const product = await stripe.products.retrieve(productId, {
         expand: ['default_price']
@@ -52,18 +52,13 @@ export const getStaticProps: GetStaticProps<any, { id: string }> = async ({ para
     const price = product.default_price as Stripe.Price
 
     return {
-        props: {
-            product:  {
-                id: product.id,
-                name: product.name,
-                imageUrl: product.images[0],
-                price: new Intl.NumberFormat('en-US', {
-                    style: 'currency',
-                    currency: 'USD',
-                }).format(price.unit_amount / 100),
-                description: product.description
-            }
-        },
-        revalidate: 60 * 60 * 1
+        id: product.id,
+        name: product.name,
+        imageUrl: product.images[0],
+        price: new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+        }).format(price.unit_amount / 100),
+        description: product.description
     }
 }
