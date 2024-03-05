@@ -17,7 +17,7 @@ interface IProduct {
 export default async function ProductPage() {
     const params = useParams<{ productId: string }>()
 
-    const product: IProduct = await getStaticProps(params.productId)
+    const product: IProduct = await getProduct(params.productId)
 
     return (
         <main className="product-container mx-auto grid max-w-6xl grid-cols-2 items-stretch gap-16">
@@ -43,7 +43,7 @@ export default async function ProductPage() {
     )
 }
 
-async function getStaticProps(productId: string) {
+async function getProduct(productId: string) {
 
     const product = await stripe.products.retrieve(productId, {
         expand: ['default_price']

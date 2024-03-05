@@ -9,7 +9,7 @@ interface IProductProps {
 export default function Product({ product }: IProductProps) {
     return (
         <div className="group relative min-h-[500px] overflow-hidden bg-[linear-gradient(180deg,_#1ea483_0%,_#7465d4_100%)]">
-            <Link href={`/product/${product.id}`}>
+            <a href={`/product/${product.id}`}>
 
                 <Image
                     src={product.imageUrl}
@@ -23,7 +23,7 @@ export default function Product({ product }: IProductProps) {
                     <span className="text-lg">{product.name}</span>
                     <strong className="text-xl font-bold text-green300">{product.price}</strong>
                 </footer>
-            </Link>
+            </a>
         </div>
     )
 }
